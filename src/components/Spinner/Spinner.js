@@ -1,6 +1,6 @@
 import Spinner from 'react-bootstrap/Spinner';
 
-function Spinner() {
+function Spiner() {
   return (
     <>
       <Spinner animation="border" size="sm" />
@@ -11,4 +11,4 @@ function Spinner() {
   );
 }
 
-export default Spinner;
+export default Spiner;

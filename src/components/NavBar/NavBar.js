@@ -1,4 +1,3 @@
-//import React, { useState } from "react";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -7,12 +6,6 @@ import CartWidget from "../CartWidget/CartWidget";
 import {NavLink} from 'react-router-dom';
 import React, { useContext } from 'react';
 import { CantidadContext } from '../../App';
-//import { agregarProducto, carrito } from "../../Pages/ProductosDisponibles";
-//import { carrito2 } from "../../Pages/ProductosDisponibles";
-//import { cantidad } from "../../Pages/ProductosDisponibles";
-
-//chicle y pega para el widget 04
-//const CantidadContext = React.createContext()
 
 function NavBar() {
 
@@ -55,5 +48,3 @@ const styles ={
 }
 
 export default NavBar;
-
-//chicle y pega

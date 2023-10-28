@@ -1,39 +1,21 @@
-//chicle y pega
-
 import { useContext, useEffect, useState } from "react"
-//import CrearOrden from "../components/CrearOrden/CrearOrden"
-//import { carrito2 } from "./ProductosDisponibles"
 import { addDoc, collection, getFirestore } from "firebase/firestore"
 import CardCarrito from "../components/CardCarrito/CardCarrito"
-import { CantidadContext, CarritoContext } from "../App"
-//import { getByDisplayValue } from "@testing-library/react"
-//import CardProducto from "../components/CardProducto/CardProducto"
+import { CantidadContext, CarritoContext, DineroContext } from "../App"
+import swal from 'sweetalert';
 
 const MiCarrito = () =>{
     const[nombre, setNombre] = useState("")
     const[numero, setNumero] = useState("")
     const[correo, setCorreo] = useState("")
-
-    //chicle y pega 05
     const [carrito, setCarrito] = useContext(CarritoContext)
-
     const [cantidad, setCantidad] = useContext(CantidadContext)
+    const [dinero, setDinero] = useContext(DineroContext)
 
-    /*chicle y pega 9
-    function limpiarCarrito(){
-        setTimeout(() => {
-            setCarrito=[]
-            setNombre=''
-            setCorreo=''
-            setNumero=''
-        }, 2000)
-    }*/
-
-//chicle y pega. Lo deje funcional itzelita, no quiero errores porfa
     const dataBase = getFirestore()
     const orderCollection = collection(dataBase, "ordenes")
+
     const crearOrden = () => {
-        const total = carrito.reduce((acum, item) => acum+item.precio, 0)
         const orderData = {
             comprador:{
                 nombre: nombre,
@@ -41,43 +23,20 @@ const MiCarrito = () =>{
                 correo: correo
             },
             productos: [...carrito],
-            //chicle y pega 05
-            //productos: [...carrito],
-            total: total
+            total: dinero
         }
         addDoc(orderCollection, orderData)
-
-        //chicle y pega 8
     }
-
-    /*chilce y pega. dios, soy yo ora vez
-    const finalizar = () => {
-        crearOrden()
-        limpiarCarrito()
-    }*/
 
     useEffect(()=>{
         console.log(carrito)
     }, [carrito])
 
+
     const eliminar = (clave) => {
-        //setCarrito(currentProductos => currentProductos.concat(clave))
+        setDinero(currentValue => currentValue-clave.clave.precio)
         setCarrito(carrito.filter(item => item !== clave))
-        //console.log(clave)
-        //console.log(carrito)
-        //chicle y pega, SI PEGO
-        //carrito2 = carrito.slice()
-        //console.log(carrito2)
-
-        //chicle y pega para el widget 04
         setCantidad(currentValue => currentValue-1)
-
-        //CHICLE Y PEGA P2
-        //setCantidad(currentValue => currentValue+1)
-        //cantidadP=cantidad
-        //cantidadO = cantidad
-        //cp=cantidad
-        //console.log(cantidad)
     }
 
     const finalizarCompra = () =>{
@@ -85,11 +44,12 @@ const MiCarrito = () =>{
         setTimeout(() => {
             setCarrito([])
             setCantidad(0)
+            setDinero(0)
+            swal("Tu compra se ha realizado exitosamente!", "Muchas gracias por comprar en Pancho Ross!", "success");
         }, 2000)
     }
 
     return(
-        //console.log(carrito2)
         <>
             {cantidad>0 ?
             <div style={{textAlign: 'center'}}>
@@ -106,6 +66,10 @@ const MiCarrito = () =>{
                             )
                         })
                     }
+                </div>
+
+                <div>
+                    <h5 style={{backgroundColor: 'gainsboro', marginLeft: '2%', marginRight: '2%'}}>Tu total es de ${dinero}</h5>
                 </div>
 
                 <div style={{textAlign: 'left', backgroundColor: '#50809f', margin: '2%'}}>

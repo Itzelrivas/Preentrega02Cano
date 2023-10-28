@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom'
 import {collection, getDocs, getFirestore} from 'firebase/firestore'
 import {useEffect, useState} from 'react'
 import Descripcion from '../Descripcion/Descripcion'
-import { Spinner } from 'react-bootstrap'
+import Spiner from '../Spinner/Spinner'
 
 const Producto = () =>{
     const { itemId } = useParams()
@@ -21,7 +21,7 @@ const Producto = () =>{
         <>
             {product ?
                 <Descripcion imagend={product.imagen} productod={product.producto} marcad={product.marca} preciod={product.precio}/>
-                : <Spinner/>
+                : <Spiner/>
             }
         </>
     )
