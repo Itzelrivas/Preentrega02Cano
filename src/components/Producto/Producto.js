@@ -1,20 +1,28 @@
 import { useParams } from 'react-router-dom'
-import { getProductoByCod } from '../../Helpers/Catalogo'
+import {collection, getDocs, getFirestore} from 'firebase/firestore'
+import {useEffect, useState} from 'react'
+import Descripcion from '../Descripcion/Descripcion'
+import { Spinner } from 'react-bootstrap'
 
 const Producto = () =>{
     const { itemId } = useParams()
-    const product = getProductoByCod(itemId)
+
+    const [items, setItems] = useState([])
+        useEffect(() => {
+            const db = getFirestore();
+            const itemCollection = collection(db, "Catalogo")
+            getDocs(itemCollection).then(respuesta =>
+                setItems(respuesta.docs.map((doc) => ({id: doc.id, ...doc.data() }))))
+        }, [])
+
+    const product = items.find((doc) => doc.codigo == itemId)
 
     return (
         <>
-        <div>
-            <div style={{display:"flex", flexDirection:"column", flexWrap:"wrap", alignItems:"center", marginTop: "2%", fontFamily: "fantasy"}}>
-                <img style={{width:"30%"}} src={product.imagen} alt="Producto de Pancho Ross"/>
-                <h2>{product.producto}</h2>
-                <h4 style={{fontFamily: "monospace", fontWeight: "bolder"}}>Marca: {product.marca}</h4>
-                <h3 style={{color:"#cc2222", textDecoration: "underline"}}>${product.precio}</h3>
-            </div>
-        </div>
+            {product ?
+                <Descripcion imagend={product.imagen} productod={product.producto} marcad={product.marca} preciod={product.precio}/>
+                : <Spinner/>
+            }
         </>
     )
 } 

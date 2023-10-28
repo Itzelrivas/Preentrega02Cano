@@ -1,12 +1,23 @@
-import React from "react";
+//import React, { useState } from "react";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import CartWidget from "../CartWidget/CartWidget";
 import {NavLink} from 'react-router-dom';
+import React, { useContext } from 'react';
+import { CantidadContext } from '../../App';
+//import { agregarProducto, carrito } from "../../Pages/ProductosDisponibles";
+//import { carrito2 } from "../../Pages/ProductosDisponibles";
+//import { cantidad } from "../../Pages/ProductosDisponibles";
+
+//chicle y pega para el widget 04
+//const CantidadContext = React.createContext()
 
 function NavBar() {
+
+  const cantidad = useContext(CantidadContext)
+
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
@@ -19,11 +30,14 @@ function NavBar() {
               <NavDropdown.Item as={NavLink} activeClassName to = {"/promociones"}>Promociones</NavDropdown.Item>
               <NavDropdown.Item as={NavLink} activeClassName to = {"/contacto"}>Contacto</NavDropdown.Item>
               <NavDropdown.Item as={NavLink} activeClassName to = {"/preguntasFrecuentes"}>Preguntas frecuentes</NavDropdown.Item>
+              
+              <NavDropdown.Item as={NavLink} activeClassName to = {"/carrito"}>Mi carrito</NavDropdown.Item>
+
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
       </Container>
-      <CartWidget numero={0}/>
+      <CartWidget numero={cantidad}/>
     </Navbar>
   );
 }
@@ -41,3 +55,5 @@ const styles ={
 }
 
 export default NavBar;
+
+//chicle y pega
